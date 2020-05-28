@@ -100,6 +100,8 @@
 		51DE3091247FB55800660B90 /* AFURLPostRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLPostRequestSerialization.h; sourceTree = "<group>"; };
 		51DE3092247FB55800660B90 /* AFURLPostRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLPostRequestSerialization.m; sourceTree = "<group>"; };
 		8DFB7D6A22B8510F980CC871 /* Pods-INS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-INS.release.xcconfig"; path = "Target Support Files/Pods-INS/Pods-INS.release.xcconfig"; sourceTree = "<group>"; };
+		977E5D63247FE90000B85C35 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		977E5D65247FEA4B00B85C35 /* DefineInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefineInterface.h; sourceTree = "<group>"; };
 		DAFB1ADE54D3E72A6E8652FF /* libPods-INS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-INS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -145,6 +147,8 @@
 		51DE3029247F4DE200660B90 /* INS */ = {
 			isa = PBXGroup;
 			children = (
+				977E5D66247FEAF200B85C35 /* Resource（资源） */,
+				977E5D64247FE9E600B85C35 /* Define（定义） */,
 				51DE3091247FB55800660B90 /* AFURLPostRequestSerialization.h */,
 				51DE3092247FB55800660B90 /* AFURLPostRequestSerialization.m */,
 				51DE308C247FAE0500660B90 /* TestViewController.h */,
@@ -274,13 +278,6 @@
 		51DE3088247FA68E00660B90 /* Resorce */ = {
 			isa = PBXGroup;
 			children = (
-				51DE302A247F4DE200660B90 /* AppDelegate.h */,
-				51DE302B247F4DE200660B90 /* AppDelegate.m */,
-				51DE3038247F4DE400660B90 /* LaunchScreen.storyboard */,
-				51DE303C247F4DE400660B90 /* main.m */,
-				51DE3030247F4DE200660B90 /* ViewController.h */,
-				51DE3031247F4DE200660B90 /* ViewController.m */,
-				51DE3033247F4DE200660B90 /* Main.storyboard */,
 			);
 			path = Resorce;
 			sourceTree = "<group>";
@@ -291,6 +288,29 @@
 				DAFB1ADE54D3E72A6E8652FF /* libPods-INS.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		977E5D64247FE9E600B85C35 /* Define（定义） */ = {
+			isa = PBXGroup;
+			children = (
+				977E5D65247FEA4B00B85C35 /* DefineInterface.h */,
+			);
+			path = "Define（定义）";
+			sourceTree = "<group>";
+		};
+		977E5D66247FEAF200B85C35 /* Resource（资源） */ = {
+			isa = PBXGroup;
+			children = (
+				977E5D63247FE90000B85C35 /* PrefixHeader.pch */,
+				51DE302A247F4DE200660B90 /* AppDelegate.h */,
+				51DE302B247F4DE200660B90 /* AppDelegate.m */,
+				51DE3038247F4DE400660B90 /* LaunchScreen.storyboard */,
+				51DE303C247F4DE400660B90 /* main.m */,
+				51DE3030247F4DE200660B90 /* ViewController.h */,
+				51DE3031247F4DE200660B90 /* ViewController.m */,
+				51DE3033247F4DE200660B90 /* Main.storyboard */,
+			);
+			path = "Resource（资源）";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -583,6 +603,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CQNZ85QPJM;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/INS/Resource（资源）/PrefixHeader.pch";
 				INFOPLIST_FILE = INS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -602,6 +623,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CQNZ85QPJM;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/INS/Resource（资源）/PrefixHeader.pch";
 				INFOPLIST_FILE = INS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
