@@ -1,13 +1,11 @@
-//
-//  AppDelegate.m
-//  INS
-//
-//  Created by lu peihan on 2020/5/28.
-//  Copyright © 2020 lu peihan. All rights reserved.
-//
+
 
 #import "AppDelegate.h"
-#import "TestViewController.h"
+#import "IQKeyboardManager.h"
+#import "MPBaseNavigationController.h"
+#import "MPHomeViewController.h"
+#import "LoginVC.h"
+
 
 @interface AppDelegate ()
 
@@ -24,20 +22,59 @@
     NSLog(@"项目运行的地址： %@",documentsDirectory);
   
     
-//    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
        
+    // UserModel 数据检测更新
+    [self UserModelVerify];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    TestViewController *vc = [[TestViewController alloc] init];
-    UINavigationController *Nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    self.window.rootViewController = Nav;
-    [self.window makeKeyAndVisible];
+
+  
     
-    
+     [self setupLoginViewController];
     
     
     return YES;
 }
+
+
+
+
+/** UserModel检查更新 保证新增的字段能用*/
+- (void)UserModelVerify
+{
+    [USER_INFOR updateDataField];
+}
+
+
+#pragma mark 自定义跳转不同的页面
+// 登录页面
+-(void)setupLoginViewController
+{
+    LoginVC *logInVc = [[LoginVC alloc]init];
+    UINavigationController *loginNavigationController = [[MPBaseNavigationController alloc]
+                                                         initWithRootViewController:logInVc];
+    self.window.rootViewController = loginNavigationController;
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+}
+
+
+//首页
+-(void)setupHomeViewController
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        
+        MPHomeViewController *tabBarController = [[MPHomeViewController alloc] init];
+        [self.window setRootViewController:tabBarController];
+        self.window.backgroundColor = [UIColor whiteColor];
+        [self.window makeKeyAndVisible];
+        
+    });
+
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

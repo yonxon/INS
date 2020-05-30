@@ -78,7 +78,7 @@ static NSString *const rLikesDelete = @"/likes";
 
 //5. 帖子收藏操作接口 POST
 //topic_id    是    String    帖子标识
-static NSString *const rCollects = @"/collects";
+static NSString *const rCollectsPOST = @"/collects";
 
 //6. 帖子取消收藏操作接口 DELETE
 //topic_id    是    String    帖子标识
@@ -113,13 +113,13 @@ static NSString *const rMsgsTopic = @"/msgs/topic";
 //topic_labels    否    String    帖子标签标识，多个，用逗号隔开
 //topic_image1    是    String    图像文件1 base64格式
 //topic_image1_suffix    是    String    图像文件1 的后缀，比如 png、jpg 等等
-static NSString *const rMsgsTopic = @"/msgs/topic";
+static NSString *const rTopicsPOST = @"/topics";
 
 //11. 帖子评论发布操作 POST
 //topic_id      是    String    帖子标识
 //comment       是    String    用户评论
 //at_user_id    否    String    艾特用户标识
-static NSString *const rMsgsTopic = @"/comments";
+static NSString *const rComments = @"/comments";
 
 
 // - -
@@ -131,7 +131,7 @@ static NSString *const rDicsLabel = @"/dics/label";
 //2. 视频推荐接口 GET
 //video_num    否    int    视频数量 默认1
 //dic_id       否    String    标签标识
-static NSString *const rDicsLabel = @"/topics/video";
+static NSString *const rTopicsVideo = @"/topics/video";
 
 
 //3. 图片推荐列表接口
@@ -175,7 +175,7 @@ static NSString *const rUsersRegion = @"/users/region";
 //pageIndex    否    int    第几页 默认第一页
 //msg_time     是    String    时间点，格式为 yyyy-mm-dd HH:mm:ss 例子：2020-05-20 14:05:05
 //is_before    是    int    1为查询此时间点前的记录，0为查询此时间点后的记录
-static NSString *const rUsersRegion = @"/users/region";
+static NSString *const rMess = @"/mess";
 
 //2. 私信读操作接口 POST
 //msg_user_id    是    String    对话者标识
@@ -256,7 +256,7 @@ static NSString *const rUsersDetail_info = @"/user/detail_info";
 //user_region         否    String    用户地区
 //user_icon           否    String    图片文件 base64格式
 //user_icon_suffix    否    String    图片文件 后缀
-static NSString *const rUsersDetail_info = @"/users";
+static NSString *const rUsersPOST = @"/users";
 
 //4. 个人便签列表接口 GET
 static NSString *const rUsersLabels = @"/users/labels";
