@@ -41,6 +41,9 @@
 - (void)initLeftButtonWithIcon:(UIImage *)icon withTitle:(NSString *)titleStr;
 /** 设置导航栏右按钮文字*/
 - (void)initRightButtonWithTitle:(NSString *)titleStr;
+/** 设置导航栏左按钮文字*/
+- (void)initLeftButtonWithTitle:(NSString *)titleStr;
+
 /** 设置导航栏返回按钮*/
 - (void)initBackBar;
 /** 设置导航栏返回按钮*/

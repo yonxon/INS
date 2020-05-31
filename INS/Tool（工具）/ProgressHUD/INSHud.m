@@ -423,8 +423,8 @@
 //    
 //    if(self.timerHubShow < 1)
 //    {
-         NSLog(@"%d",self.timerHubShow);
-        
+//         NSLog(@"%d",self.timerHubShow);
+    
         [self.timer invalidate];
         self.timer = nil;
         [self Dismiss];

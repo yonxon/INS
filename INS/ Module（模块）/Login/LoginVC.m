@@ -15,7 +15,7 @@
 
 
 
-@interface LoginVC ()<WXApiDelegate>
+@interface LoginVC ()<WXApiDelegate,UIApplicationDelegate>
 {
     NSString *_code;//用户换取access_token的code，仅在ErrCode为0时有效
     /*    NSString *_accessToken;//接口调用凭证
@@ -25,6 +25,8 @@
      NSString *_unionid; //当且仅当该移动应用已获得该用户的userinfo授权时，才会出现该字段*/
 }
 
+@property (nonatomic,weak) IBOutlet UIImageView *imgWeChat;
+
 @end
 
 @implementation LoginVC
@@ -33,27 +35,84 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.imgWeChat.userInteractionEnabled = YES;
+   
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(loginWeChat)];
+
+    tap.numberOfTapsRequired = 1;
+    //设置手指字数
+    tap.numberOfTouchesRequired = 1;
+    
+    //别忘了添加到testView上
+    [self.imgWeChat addGestureRecognizer:tap];
+    
+    [self gotoHomeView];
 }
 
 
 
-
-- (IBAction)btnWeChat:(id)sender
+- (void)viewWillAppear:(BOOL)animated
 {
-     [self loginWeChat];
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
+
+// 直接进入首页
+- (void)gotoHomeView
+{
+    NSNumber *isLogin = USER_INFOR.isLogin;
+    if([isLogin isEqual:@1])
+    {
+         [((AppDelegate*) AppDelegateInstance) setupHomeViewController];
+    }
+  
 }
 
 
-
+// 登录
 - (IBAction)login:(id)sender
 {
-      [((AppDelegate*) AppDelegateInstance) setupHomeViewController];
+    USER_INFOR.isLogin = @1;
+    [USER_INFOR saveData];
+
+    [((AppDelegate*) AppDelegateInstance) setupHomeViewController];
+}
+
+// 帮助
+- (IBAction)btnHelp:(id)sender
+{
+     [MessageShow ShowString:@"帮助"];
+}
+
+// 退出
+- (IBAction)btnQuit:(id)sender
+{
+    [UIView animateWithDuration:1.0f animations:^{
+        INSkeyWindow.alpha = 0;
+        INSkeyWindow.frame = CGRectMake(0, INSkeyWindow.bounds.size.width, 0, 0);
+    } completion:^(BOOL finished) {
+        exit(0);
+    }];
 }
 
 
+// 用户协议
+- (IBAction)btnYHXY:(id)sender
+{
+    [MessageShow ShowString:@"用户协议"];
+}
 
+// 隐私政策
+- (IBAction)btnYSTK:(id)sender
+{
+    [MessageShow ShowString:@"隐私政策"];
+}
 
-
+// 中国移动认证服务条款
+- (IBAction)btnZGYD:(id)sender
+{
+    [MessageShow ShowString:@"中国移动认证服务条款"];
+}
 
 
 #warning 临时参考调用代码

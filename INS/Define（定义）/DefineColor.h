@@ -35,7 +35,7 @@
 // 副色调
 #define COLOR_SECOND RGBA(253,130,74,1.0)
 // 背景颜色
-#define COLOR_BACKGROUND RGBA(238, 237, 238,1.0)
+#define COLOR_BACKGROUND RGBA(254, 254, 254,1.0)
 // 边框颜色
 #define COLOR_BORDER RGBA(222,222,222,1.0)
 // 编辑边框颜色

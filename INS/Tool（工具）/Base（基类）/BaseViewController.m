@@ -296,12 +296,20 @@ float ipadFontSize = 20.0f;
 
 - (void)initRightButtonWithTitle:(NSString *)titleStr
 {
-    
     UIButton *btn = [self navigationButtonWithTitle:titleStr];
     
     [btn addTarget:self action:@selector(rightAction) forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+}
+
+- (void)initLeftButtonWithTitle:(NSString *)titleStr
+{
+    UIButton *btn = [self navigationButtonWithTitle:titleStr];
+    
+    [btn addTarget:self action:@selector(rightAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
 }
 
 - (void)initBackBarWithImage:(UIImage *)image{
@@ -377,7 +385,7 @@ float ipadFontSize = 20.0f;
     btn.frame = CGRectMake(0, 0, 80 ,44);
     btn.titleLabel.font = [UIFont systemFontOfSize:17.];
     [btn setTitle:titleStr forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     return btn;
 }
 

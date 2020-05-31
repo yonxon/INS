@@ -81,7 +81,7 @@
 #define WeakObj(o) try{}@finally{} __weak typeof(o) o##Weak = o;
 
 // 宏
-#define UTkeyWindow        [UIApplication sharedApplication].keyWindow
+#define INSkeyWindow        [UIApplication sharedApplication].keyWindow
 
 
 
