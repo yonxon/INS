@@ -37,34 +37,7 @@
 {
     NSDictionary *userDic = [[NSDictionary alloc] initWithObjectsAndKeys:
                              self.UserName,kUserName,
-                             self.StaffID,kStaffID,
-                             self.ServerIP,kServerIP,
-                             self.ServerPort,kServerPort,
-                             self.SocketIP,kSocketIP,
-                             self.SocketPort,kSocketPort,
-                             self.Password,kPassword,
-                             self.Department,kDepartment,
-                             self.DepartmentID,kDepartmentID,
                              self.isLogin,kIsLogin,
-                             self.IsBuilder,kIsBuilder,
-                             self.LimitTime,kLimitTime,
-                             self.StationName,kStationName,
-                             self.StationDesc,kStationDesc,
-                             self.StationShortName,kStationShortName,
-                             self.StationStationNo,kStationStationNo,
-                             self.RoleId,kRoleId,
-                             self.RoleName,kRoleName,
-                             self.Permissions,kPermissions,
-                             self.Permissions,kPermissions,
-                             [NSString stringWithFormat:@"%ld",(long)self.latitude],kLatitude,
-                             [NSString stringWithFormat:@"%ld",(long)self.longitude],kLongitude,
-                             self.defaultBleName,kDefaultBleName,
-                             self.defaultBleUUID,kDefaultBleUUID,
-                             self.ShowPassword,kShowPassword,
-                             self.MD5Data,kDefaultMD5Data,
-                             self.UseHttps,kUseHttps,
-                             self.RunModel ,kRunModel,
-                              self.isNeedAudit, kIsNeedAudit,
                              nil];
     
     
@@ -82,35 +55,7 @@
     if ([fileManager fileExistsAtPath:filePath]) {
         NSDictionary *userDic = [NSDictionary dictionaryWithContentsOfFile:filePath];
         self.UserName           = [userDic objectForKey:kUserName];
-        self.StaffID            = [userDic objectForKey:kStaffID];
-        self.ServerIP           = [userDic objectForKey:kServerIP];
-        self.ServerPort         = [userDic objectForKey:kServerPort];
-        self.SocketIP           = [userDic objectForKey:kSocketIP];
-        self.SocketPort         = [userDic objectForKey:kSocketPort];
-        self.Password           = [userDic objectForKey:kPassword];
-        self.Department         = [userDic objectForKey:kDepartment];
-        self.DepartmentID       = [userDic objectForKey:kDepartmentID];
         self.isLogin            = [userDic objectForKey:kIsLogin];
-        self.IsBuilder          = [userDic objectForKey:kIsBuilder];
-        self.LimitTime          = [userDic objectForKey:kLimitTime];
-        self.StationStationNo   = [userDic objectForKey:kStationStationNo];
-        self.StationName        = [userDic objectForKey:kStationName];
-        self.StationShortName   = [userDic objectForKey:kStationShortName];
-        self.StationDesc        = [userDic objectForKey:kStationDesc];
-        self.RoleId             = [userDic objectForKey:kRoleId];
-        self.RoleName           = [userDic objectForKey:kRoleName];
-        self.Permissions        = [userDic objectForKey:kPermissions];
-        self.Permissions        = [userDic objectForKey:kPermissions];
-        self.latitude           = [[userDic objectForKey:kLatitude]floatValue];
-        self.longitude          = [[userDic objectForKey:kLongitude]floatValue];
-        self.defaultBleName     = [userDic objectForKey:kDefaultBleName];
-        self.defaultBleUUID     = [userDic objectForKey:kDefaultBleUUID];
-        self.ShowPassword       = [userDic objectForKey:kShowPassword];
-        self.MD5Data            = [userDic objectForKey:kDefaultMD5Data];
-        self.UseHttps           = [userDic objectForKey:kUseHttps];
-        self.RunModel           = [userDic objectForKey:kRunModel];
-        self.isNeedAudit        = [userDic objectForKey:kIsNeedAudit];
-        
     }
     
 }
@@ -143,33 +88,7 @@
 - (void)initData
 {
     self.isLogin            = @0;
-    self.IsBuilder          = @0;
-    self.LimitTime          = @0;
-    self.ShowPassword       = @"";
-    self.RoleId             = @"0";
-    self.RoleName           = @"";
-    self.Permissions        = @"";
     self.UserName           = @"";
-    self.StaffID            = @"";
-    self.ServerIP           = @"";
-    self.ServerPort         = @"";
-    self.SocketIP           = @"";
-    self.SocketPort         = @"";
-    self.Password           = @"";
-    self.Department         = @"";
-    self.DepartmentID       = @"";
-    self.StationDesc        = @"";
-    self.StationName        = @"";
-    self.StationShortName   = @"";
-    self.StationStationNo   = @"";
-    self.latitude           = 0;
-    self.longitude          = 0;
-    self.defaultBleName     = @"";
-    self.defaultBleUUID     = @"";
-    self.MD5Data            = [[NSData alloc] init];
-    self.UseHttps = @0;
-    self.RunModel = @0;
-    self.isNeedAudit = @1;
 }
 
 /** 版本兼容 - 更新文件字段，确保新增的字段可用*/

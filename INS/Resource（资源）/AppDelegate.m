@@ -35,6 +35,11 @@
      [self setupLoginViewController];
     
     
+//    [UIApplication sharedApplication].statusBarStyle = ![UIApplication sharedApplication].statusBarStyle;  //UIStatusBarStyleLightContent状态栏字体白色 UIStatusBarStyleDefault黑色
+//    [[UIApplication sharedApplication]setStatusBarStyle:![UIApplication sharedApplication].statusBarStyle  animated:YES];    //UIStatusBarStyleLightContent状态栏字体白色 UIStatusBarStyleDefault黑色  同时可指定变换动画
+    
+    
+    
     return YES;
 }
 

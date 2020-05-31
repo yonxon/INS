@@ -35,6 +35,9 @@ float ipadFontSize = 20.0f;
     
     return self;
 }
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
 
 
 - (void)viewDidLoad
@@ -60,8 +63,9 @@ float ipadFontSize = 20.0f;
     if (![self rightButton]) {
         [self configRightBaritemWithImage];
     }
-    //去掉系统自带的黑边
-    //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+    
     // 导航栏背景颜色
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     

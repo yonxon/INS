@@ -38,7 +38,7 @@
 
 
 
--(IBAction)btnWeChat:(id)sender
+- (IBAction)btnWeChat:(id)sender
 {
      [self loginWeChat];
 }
