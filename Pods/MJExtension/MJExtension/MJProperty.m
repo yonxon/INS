@@ -10,13 +10,10 @@
 #import "MJFoundation.h"
 #import "MJExtensionConst.h"
 #import <objc/message.h>
-#include "TargetConditionals.h"
 
 @interface MJProperty()
 @property (strong, nonatomic) NSMutableDictionary *propertyKeysDict;
 @property (strong, nonatomic) NSMutableDictionary *objectClassInArrayDict;
-@property (strong, nonatomic) dispatch_semaphore_t propertyKeysLock;
-@property (strong, nonatomic) dispatch_semaphore_t objectClassInArrayLock;
 @end
 
 @implementation MJProperty
@@ -27,8 +24,6 @@
     if (self = [super init]) {
         _propertyKeysDict = [NSMutableDictionary dictionary];
         _objectClassInArrayDict = [NSMutableDictionary dictionary];
-        _propertyKeysLock = dispatch_semaphore_create(1);
-        _objectClassInArrayLock = dispatch_semaphore_create(1);
     }
     return self;
 }
@@ -74,19 +69,7 @@
 - (id)valueForObject:(id)object
 {
     if (self.type.KVCDisabled) return [NSNull null];
-    
-    id value = [object valueForKey:self.name];
-    
-    // 32位BOOL类型转换json后成Int类型
-    /** https://github.com/CoderMJLee/MJExtension/issues/545 */
-    // 32 bit device OR 32 bit Simulator
-#if defined(__arm__) || (TARGET_OS_SIMULATOR && !__LP64__)
-    if(self.type.isBoolType) {
-        value = @([(NSNumber *)value boolValue]);
-    }
-#endif
-    
-    return value;
+    return [object valueForKey:self.name];
 }
 
 /**
@@ -167,45 +150,21 @@
 - (void)setPorpertyKeys:(NSArray *)propertyKeys forClass:(Class)c
 {
     if (propertyKeys.count == 0) return;
-    NSString *key = NSStringFromClass(c);
-    if (!key) return;
-    
-    MJ_LOCK(self.propertyKeysLock);
-    self.propertyKeysDict[key] = propertyKeys;
-    MJ_UNLOCK(self.propertyKeysLock);
+    self.propertyKeysDict[NSStringFromClass(c)] = propertyKeys;
 }
-
 - (NSArray *)propertyKeysForClass:(Class)c
 {
-    NSString *key = NSStringFromClass(c);
-    if (!key) return nil;
-    
-    MJ_LOCK(self.propertyKeysLock);
-    NSArray *propertyKeys = self.propertyKeysDict[key];
-    MJ_UNLOCK(self.propertyKeysLock);
-    return propertyKeys;
+    return self.propertyKeysDict[NSStringFromClass(c)];
 }
 
 /** 模型数组中的模型类型 */
 - (void)setObjectClassInArray:(Class)objectClass forClass:(Class)c
 {
     if (!objectClass) return;
-    NSString *key = NSStringFromClass(c);
-    if (!key) return;
-    
-    MJ_LOCK(self.objectClassInArrayLock);
-    self.objectClassInArrayDict[key] = objectClass;
-    MJ_UNLOCK(self.objectClassInArrayLock);
+    self.objectClassInArrayDict[NSStringFromClass(c)] = objectClass;
 }
-
 - (Class)objectClassInArrayForClass:(Class)c
 {
-    NSString *key = NSStringFromClass(c);
-    if (!key) return nil;
-    
-    MJ_LOCK(self.objectClassInArrayLock);
-    Class objectClass = self.objectClassInArrayDict[key];
-    MJ_UNLOCK(self.objectClassInArrayLock);
-    return objectClass;
+    return self.objectClassInArrayDict[NSStringFromClass(c)];
 }
 @end

@@ -1,5 +1,5 @@
 //
-// IQUIView+Hierarchy.h
+//  UIView+Hierarchy.h
 // https://github.com/hackiftekhar/IQKeyboardManager
 // Copyright (c) 2013-16 Iftekhar Qurashi.
 //
@@ -22,15 +22,23 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIView.h>
-#import <UIKit/UIViewController.h>
 #import "IQKeyboardManagerConstants.h"
 
-@class UICollectionView, UIScrollView, UITableView, UISearchBar, NSArray;
+@class UICollectionView, UIScrollView, UITableView, NSArray;
 
 /**
  UIView hierarchy category.
  */
 @interface UIView (IQ_UIView_Hierarchy)
+
+///------------------------------
+/// @name canBecomeFirstResponder
+///------------------------------
+
+/**
+ Returns YES if IQKeyboardManager asking for `canBecomeFirstResponder. Useful when doing custom work in `textFieldShouldBeginEditing:` delegate.
+ */
+@property (nonatomic, readonly) BOOL isAskingCanBecomeFirstResponder __attribute__((deprecated("isAskingCanBecomeFirstResponder property was come to existence as a workaround to handle `textFieldShouldBeginEditing:` multiple call issue, but we removed `canBecomeFirstResponder` method call from library, now this property make no sense and will be removed in future releases. From now this property will always return NO because of not calling `canBecomeFirstResponder` method. Please update your code/logic in `textFieldShouldBeginEditing:` method.")));
 
 ///----------------------
 /// @name viewControllers
@@ -39,17 +47,12 @@
 /**
  Returns the UIViewController object that manages the receiver.
  */
-@property (nullable, nonatomic, readonly, strong) UIViewController *viewContainingController;
+@property (nullable, nonatomic, readonly, strong) UIViewController *viewController;
 
 /**
  Returns the topMost UIViewController object in hierarchy.
  */
 @property (nullable, nonatomic, readonly, strong) UIViewController *topMostController;
-
-/**
- Returns the UIViewController object that is actually the parent of this object. Most of the time it's the viewController object which actually contains it, but result may be different if it's viewController is added as childViewController of another viewController.
- */
-@property (nullable, nonatomic, readonly, strong) UIViewController *parentContainerViewController;
 
 ///-----------------------------------
 /// @name Superviews/Subviews/Siglings
@@ -57,32 +60,27 @@
 
 /**
  Returns the superView of provided class type.
-
- @param classType class type of the object which is to be search in above hierarchy and return
-
- @param belowView view object in upper hierarchy where method should stop searching and return nil
  */
--(nullable __kindof UIView*)superviewOfClassType:(nonnull Class)classType belowView:(nullable UIView*)belowView;
--(nullable __kindof UIView*)superviewOfClassType:(nonnull Class)classType;
+-(nullable UIView*)superviewOfClassType:(nonnull Class)classType;
 
 /**
  Returns all siblings of the receiver which canBecomeFirstResponder.
  */
-@property (nonnull, nonatomic, readonly, copy) NSArray<__kindof UIView*> *responderSiblings;
+@property (nonnull, nonatomic, readonly, copy) NSArray *responderSiblings;
 
 /**
  Returns all deep subViews of the receiver which canBecomeFirstResponder.
  */
-@property (nonnull, nonatomic, readonly, copy) NSArray<__kindof UIView*> *deepResponderViews;
+@property (nonnull, nonatomic, readonly, copy) NSArray *deepResponderViews;
 
 ///-------------------------
 /// @name Special TextFields
 ///-------------------------
 
 /**
- Returns searchBar if receiver object is UISearchBarTextField, otherwise return nil.
+ Returns YES if the receiver object is UISearchBarTextField, otherwise return NO.
  */
-@property (nullable, nonatomic, readonly) UISearchBar *textFieldSearchBar;
+@property (nonatomic, getter=isSearchBarTextField, readonly) BOOL searchBarTextField;
 
 /**
  Returns YES if the receiver object is UIAlertSheetTextField, otherwise return NO.
@@ -119,12 +117,6 @@
 
 @end
 
-
-@interface UIViewController (IQ_UIView_Hierarchy)
-
--(nullable UIViewController*)parentIQContainerViewController;
-
-@end
 
 /**
  NSObject category to used for logging purposes

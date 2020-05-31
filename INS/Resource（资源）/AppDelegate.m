@@ -5,9 +5,9 @@
 #import "MPBaseNavigationController.h"
 #import "MPHomeViewController.h"
 #import "LoginVC.h"
+#import "WXApi.h"
 
-
-@interface AppDelegate ()
+@interface AppDelegate ()<WXApiDelegate>
 
 @end
 
@@ -21,6 +21,7 @@
     NSString*documentsDirectory = [[paths objectAtIndex:0] copy];
     NSLog(@"项目运行的地址： %@",documentsDirectory);
   
+    [WXApi registerApp:appId];
     
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
        
@@ -39,6 +40,19 @@
 
 
 
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
+    return [WXApi handleOpenURL:url delegate:self];
+}
+
+#pragma mark - WXApiDelegate
+- (void)onResp:(BaseResp *)resp{
+    if([resp isKindOfClass:[SendAuthResp class]]){
+        SendAuthResp *resp2 = (SendAuthResp *)resp;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"wxLogin" object:resp2];
+    }else{
+        NSLog(@"授权失败");
+    }
+}
 
 /** UserModel检查更新 保证新增的字段能用*/
 - (void)UserModelVerify

@@ -1,5 +1,5 @@
 //
-// IQTitleBarButtonItem.m
+//  IQTitleBarButtonItem.m
 // https://github.com/hackiftekhar/IQKeyboardManager
 // Copyright (c) 2013-16 Iftekhar Qurashi.
 //
@@ -24,18 +24,16 @@
 #import "IQTitleBarButtonItem.h"
 #import "IQKeyboardManagerConstants.h"
 #import "IQKeyboardManagerConstantsInternal.h"
-
 #import <UIKit/UILabel.h>
 #import <UIKit/UIButton.h>
 
-@interface IQTitleBarButtonItem ()
-
-@property(nullable, nonatomic, strong) UIView *titleView;
-@property(nullable, nonatomic, strong) UIButton *titleButton;
-
-@end
-
 @implementation IQTitleBarButtonItem
+{
+    UIView *_titleView;
+    UIButton *_titleButton;
+}
+@synthesize font = _font;
+
 
 -(nonnull instancetype)initWithTitle:(nullable NSString *)title
 {
@@ -44,6 +42,7 @@
     {
         _titleView = [[UIView alloc] init];
         _titleView.backgroundColor = [UIColor clearColor];
+        _titleView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 
         _titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
         _titleButton.enabled = NO;
@@ -52,51 +51,22 @@
         [_titleButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
         [_titleButton setBackgroundColor:[UIColor clearColor]];
         [_titleButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+        _titleButton.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         [self setTitle:title];
-        [self setTitleFont:[UIFont systemFontOfSize:13.0]];
+        [self setFont:[UIFont systemFontOfSize:13.0]];
         [_titleView addSubview:_titleButton];
-        
-        if (@available(iOS 11.0, *))
-        {
-            CGFloat layoutDefaultLowPriority = UILayoutPriorityDefaultLow-1;
-            CGFloat layoutDefaultHighPriority = UILayoutPriorityDefaultHigh-1;
-
-            _titleView.translatesAutoresizingMaskIntoConstraints = NO;
-            [_titleView setContentHuggingPriority:layoutDefaultLowPriority forAxis:UILayoutConstraintAxisVertical];
-            [_titleView setContentHuggingPriority:layoutDefaultLowPriority forAxis:UILayoutConstraintAxisHorizontal];
-            [_titleView setContentCompressionResistancePriority:layoutDefaultHighPriority forAxis:UILayoutConstraintAxisVertical];
-            [_titleView setContentCompressionResistancePriority:layoutDefaultHighPriority forAxis:UILayoutConstraintAxisHorizontal];
-            
-            _titleButton.translatesAutoresizingMaskIntoConstraints = NO;
-            [_titleButton setContentHuggingPriority:layoutDefaultLowPriority forAxis:UILayoutConstraintAxisVertical];
-            [_titleButton setContentHuggingPriority:layoutDefaultLowPriority forAxis:UILayoutConstraintAxisHorizontal];
-            [_titleButton setContentCompressionResistancePriority:layoutDefaultHighPriority forAxis:UILayoutConstraintAxisVertical];
-            [_titleButton setContentCompressionResistancePriority:layoutDefaultHighPriority forAxis:UILayoutConstraintAxisHorizontal];
-
-            NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:_titleButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_titleView attribute:NSLayoutAttributeTop multiplier:1 constant:0];
-            NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:_titleButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_titleView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-            NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:_titleButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_titleView attribute:NSLayoutAttributeLeading multiplier:1 constant:0];
-            NSLayoutConstraint *trailing = [NSLayoutConstraint constraintWithItem:_titleButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_titleView attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
-            [_titleView addConstraints:@[top,bottom,leading,trailing]];
-        }
-        else
-        {
-            _titleView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-            _titleButton.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        }
-
         self.customView = _titleView;
     }
     return self;
 }
 
--(void)setTitleFont:(UIFont *)titleFont
+-(void)setFont:(UIFont *)font
 {
-    _titleFont = titleFont;
+    _font = font;
     
-    if (titleFont)
+    if (font)
     {
-        _titleButton.titleLabel.font = titleFont;
+        _titleButton.titleLabel.font = font;
     }
     else
     {
@@ -110,23 +80,31 @@
     [_titleButton setTitle:title forState:UIControlStateNormal];
 }
 
--(void)setTitleColor:(UIColor*)titleColor
+-(void)setSelectableTextColor:(UIColor*)selectableTextColor
 {
-    _titleColor = titleColor;
-    [_titleButton setTitleColor:_titleColor?:[UIColor lightGrayColor] forState:UIControlStateDisabled];
+    _selectableTextColor = selectableTextColor;
+    [_titleButton setTitleColor:_selectableTextColor forState:UIControlStateNormal];
 }
 
--(void)setSelectableTitleColor:(UIColor*)selectableTitleColor
+-(void)setTitleTarget:(nullable id)target action:(nullable SEL)action
 {
-    _selectableTitleColor = selectableTitleColor;
-    [_titleButton setTitleColor:_selectableTitleColor?:[UIColor colorWithRed:0.0 green:0.5 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
-}
-
--(void)setInvocation:(NSInvocation *)invocation
-{
-    [super setInvocation:invocation];
+    NSInvocation *invocation = nil;
     
-    if (invocation.target == nil || invocation.selector == NULL)
+    if (target && action)
+    {
+        invocation = [NSInvocation invocationWithMethodSignature:[target methodSignatureForSelector:action]];
+        invocation.target = target;
+        invocation.selector = action;
+    }
+
+    self.titleInvocation = invocation;
+}
+
+-(void)setTitleInvocation:(NSInvocation*)invocation
+{
+    _titleInvocation = invocation;
+    
+    if (_titleInvocation.target == nil || _titleInvocation.selector == NULL)
     {
         self.enabled = NO;
         _titleButton.enabled = NO;
@@ -136,16 +114,8 @@
     {
         self.enabled = YES;
         _titleButton.enabled = YES;
-        [_titleButton addTarget:invocation.target action:invocation.selector forControlEvents:UIControlEventTouchUpInside];
+        [_titleButton addTarget:_titleInvocation.target action:_titleInvocation.selector forControlEvents:UIControlEventTouchUpInside];
     }
-}
-
--(void)dealloc
-{
-    self.customView = nil;
-    [_titleButton removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
-    _titleView = nil;
-    _titleButton = nil;
 }
 
 @end

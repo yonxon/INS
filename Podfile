@@ -9,4 +9,5 @@ pod 'JSONModel', '~> 1.0.1'
 pod 'MJExtension'
 pod 'FMDB', '~> 2.5'
 pod 'CYLTabBarController'
+pod 'WechatOpenSDK'
 end
