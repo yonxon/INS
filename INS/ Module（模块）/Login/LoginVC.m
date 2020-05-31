@@ -2,7 +2,6 @@
 //  LoginVC.m
 //  INS
 //
-//  Created by lu peihan on 2020/5/30.
 //  Copyright © 2020 lu peihan. All rights reserved.
 //
 
@@ -34,17 +33,107 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-   
-    
 }
+
+
 
 
 -(IBAction)btnWeChat:(id)sender
 {
-     [self login];
+     [self loginWeChat];
 }
 
-- (void)login{
+
+
+- (IBAction)login:(id)sender
+{
+      [((AppDelegate*) AppDelegateInstance) setupHomeViewController];
+}
+
+
+
+
+
+
+
+#warning 临时参考调用代码
+// 数据请求
+- (void)requestTest
+{
+    NSString *url = @"http://119.23.47.203:7005/UTAPPService/JOYOD/LoginCheckByNameOrTel";
+
+    [RequestTool GET:url
+          parameters:@{@"userName":@"LPH",
+                       @"pwd":@"98212E3BAFB80DF6",
+                       @"pdaId":@"1B11558A-AC20-4B9D-AC28-E91EE7CCBCD1"
+          }
+             success:^(id responseObject) {
+
+    } failure:^(NSError *error) {
+
+    }];
+}
+
+/** 弹出框调用示例*/
+- (void)messageShow
+{
+    [MessageShow ShowSuccessString:@"成功"];
+    
+    [MessageShow ShowErrorString:@"失败"];
+    
+    [MessageShow showWithTitle:@"标题" message:@"消息内容" OKBlock:^{
+        
+    } CancelBlock:^{
+        
+    }];
+}
+
+// 数据库调用示例
+- (void)DBTest
+{
+    //  批量保存
+    NSMutableArray *arrayData = [[NSMutableArray alloc] init];
+    NSDictionary *dicDepartMent = @{@"Dept":@"123459789"};
+    NSDictionary *dicDepartMent2 = @{@"Dept":@"呵呵"};
+    DepartMent *model1 = [DepartMent modelWithDict:dicDepartMent];
+    DepartMent *model2 = [DepartMent modelWithDict:dicDepartMent2];
+    [arrayData addObject:model1];
+    [arrayData addObject:model2];
+    [DepartMent saveObjects:arrayData];
+    
+    //  单个保存
+    // 字典转model
+   NSDictionary *dicDepartMent3 = @{@"Dept":@"字典转model"};
+    DepartMent *model3 = [DepartMent modelWithDict:dicDepartMent3];
+    [model3 save];
+
+    // 更新
+    model3.Dept = @"0000";
+    [model3 update];
+    
+    // 查询
+    NSArray *arrayDB = [DepartMent findByCriteria:[NSString stringWithFormat:@"WHERE Dept=%@",@"123459789"]];
+    
+    // 查询
+    NSArray *arr = [DepartMent findAll];
+    
+    // 删除 方式一
+    //     [DepartMent deleteObjectsByCriteria:[NSString stringWithFormat:@"Where Dept = '%@'",@"0000"]];
+    // 删除 方式二
+    [DepartMent deleteObjects:arr Column:@"Dept" value:@"0000"];
+    
+        // 清空
+    [DepartMent clearTable];
+}
+
+
+
+
+
+
+
+#pragma mark - 微信登录
+- (void)loginWeChat{
     //判断微信是否安装
     if([WXApi isWXAppInstalled]){
         SendAuthReq *req = [[SendAuthReq alloc] init];
@@ -111,7 +200,7 @@
     NSString *openid = [[NSUserDefaults standardUserDefaults] objectForKey:WX_OPEN_ID];
     if(!accessToken || [accessToken isEqualToString:@""] || !openid || [openid isEqualToString:@""]){
         //如果没登陆过，则登陆
-        [self login];
+        [self loginWeChat];
     }else{
         //否则验证access token 是否还有效
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -181,7 +270,7 @@
             }
         }else{
             //如果refreshToken为空，说明refreshToken也过期了，需要重新登陆
-            [self login];
+            [self loginWeChat];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -211,88 +300,14 @@
         
         NSLog(@"%@",responseObject);
         NSDictionary *resp = (NSDictionary*)responseObject;
-//        self->_nicknameLabel.text = resp[@"nickname"];
-//        self->_sexLabel.text = [resp[@"sex"] intValue] == 1 ? @"男" : @"女";
-//        self->_addressLabel.text = [NSString stringWithFormat:@"%@%@%@",resp[@"country"],resp[@"province"],resp[@"city"]];
+        //        self->_nicknameLabel.text = resp[@"nickname"];
+        //        self->_sexLabel.text = [resp[@"sex"] intValue] == 1 ? @"男" : @"女";
+        //        self->_addressLabel.text = [NSString stringWithFormat:@"%@%@%@",resp[@"country"],resp[@"province"],resp[@"city"]];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"fail");
         NSLog(@"%@",task.response);
     }];
 }
-
-- (IBAction)login:(id)sender
-{
-      [((AppDelegate*) AppDelegateInstance) setupHomeViewController];
-}
-
-
-
-
-
-
-
-#warning 临时参考调用代码
-// 数据请求
-- (void)requestTest
-{
-    NSString *url = @"http://119.23.47.203:7005/UTAPPService/JOYOD/LoginCheckByNameOrTel";
-
-
-    [RequestTool GET:url
-          parameters:@{@"userName":@"LPH",
-                       @"pwd":@"98212E3BAFB80DF6",
-                       @"pdaId":@"1B11558A-AC20-4B9D-AC28-E91EE7CCBCD1"
-          }
-             success:^(id responseObject) {
-
-
-
-    } failure:^(NSError *error) {
-
-    }];
-}
-
-
-
-
-// 数据库调用示例
-- (void)DBTest
-{
-    //  批量保存
-    NSMutableArray *arrayData = [[NSMutableArray alloc] init];
-    NSDictionary *dicDepartMent = @{@"Dept":@"123459789"};
-    NSDictionary *dicDepartMent2 = @{@"Dept":@"呵呵"};
-    DepartMent *model1 = [DepartMent modelWithDict:dicDepartMent];
-    DepartMent *model2 = [DepartMent modelWithDict:dicDepartMent2];
-    [arrayData addObject:model1];
-    [arrayData addObject:model2];
-    [DepartMent saveObjects:arrayData];
-    
-    //  单个保存
-    // 字典转model
-   NSDictionary *dicDepartMent3 = @{@"Dept":@"字典转model"};
-    DepartMent *model3 = [DepartMent modelWithDict:dicDepartMent3];
-    [model3 save];
-
-    // 更新
-    model3.Dept = @"0000";
-    [model3 update];
-    
-    // 查询
-    NSArray *arrayDB = [DepartMent findByCriteria:[NSString stringWithFormat:@"WHERE Dept=%@",@"123459789"]];
-    
-    // 查询
-    NSArray *arr = [DepartMent findAll];
-    
-    // 删除 方式一
-    //     [DepartMent deleteObjectsByCriteria:[NSString stringWithFormat:@"Where Dept = '%@'",@"0000"]];
-    // 删除 方式二
-    [DepartMent deleteObjects:arr Column:@"Dept" value:@"0000"];
-    
-        // 清空
-    [DepartMent clearTable];
-}
-
 
 @end
