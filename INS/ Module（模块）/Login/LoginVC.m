@@ -26,6 +26,9 @@
 }
 
 @property (nonatomic,weak) IBOutlet UIImageView *imgWeChat;
+@property (nonatomic,weak) IBOutlet UILabel *lblWechat;
+@property (nonatomic,weak) IBOutlet UITextField *txtPhone;
+
 
 @end
 
@@ -33,28 +36,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
-    self.imgWeChat.userInteractionEnabled = YES;
-   
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(loginWeChat)];
 
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(loginWeChat)];
     tap.numberOfTapsRequired = 1;
-    //设置手指字数
     tap.numberOfTouchesRequired = 1;
-    
-    //别忘了添加到testView上
     [self.imgWeChat addGestureRecognizer:tap];
     
     [self gotoHomeView];
+    
+//    [self requestTest];
 }
 
+
+- (void)showWeChatLogin
+{
+    if([WXApi isWXAppInstalled])
+    {
+        self.imgWeChat.userInteractionEnabled = YES;
+        self.imgWeChat.hidden = NO;
+        self.lblWechat.hidden = NO;
+    }else
+    {
+        self.imgWeChat.hidden = YES;
+        self.lblWechat.hidden = YES;
+    }
+}
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    
+    [self showWeChatLogin];
 }
 
 // 直接进入首页
@@ -72,10 +86,26 @@
 // 登录
 - (IBAction)login:(id)sender
 {
-    USER_INFOR.isLogin = @1;
-    [USER_INFOR saveData];
+    // 登录请求代码 已调通
+    [RequestTool POST:rLoginOnekey
+           parameters:@{@"user_phone":self.txtPhone.text}
+              success:^(id responseObject)
+     {
 
-    [((AppDelegate*) AppDelegateInstance) setupHomeViewController];
+         NSDictionary *dic = responseObject;
+         if([dic[KeySuccess] integerValue] == RequestSuccess)
+         {
+             NSString *jwt = dic[@"object"];
+             USER_INFOR.jwt = jwt;
+             USER_INFOR.isLogin = @1;
+             [USER_INFOR saveData];
+              [((AppDelegate*) AppDelegateInstance) setupHomeViewController];
+         }
+         
+     } failure:^(NSError *error) {
+
+         [MessageShow ShowSuccessString:@"登录成功"];
+     }];
 }
 
 // 帮助
@@ -119,18 +149,24 @@
 // 数据请求
 - (void)requestTest
 {
-    NSString *url = @"http://119.23.47.203:7005/UTAPPService/JOYOD/LoginCheckByNameOrTel";
-
-    [RequestTool GET:url
-          parameters:@{@"userName":@"LPH",
-                       @"pwd":@"98212E3BAFB80DF6",
-                       @"pdaId":@"1B11558A-AC20-4B9D-AC28-E91EE7CCBCD1"
-          }
-             success:^(id responseObject) {
-
-    } failure:^(NSError *error) {
-
-    }];
+//    [RequestTool POST:rLoginOnekey
+//          parameters:@{@"user_phone":@"15918708414" }
+//             success:^(id responseObject)
+//    {
+//
+//    } failure:^(NSError *error) {
+//
+//    }];
+   
+//    NSString *url = @"/users/info/c9c4756847584a999cfc91b8e2a78c89";
+//    
+////    rUsersInfo
+//    [RequestTool GET:rUsersInfo parameters:nil success:^(id responseObject) {
+//
+//    } failure:^(NSError *error) {
+//
+//    }];
+    
 }
 
 /** 弹出框调用示例*/

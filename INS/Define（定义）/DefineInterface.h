@@ -6,7 +6,7 @@
 
 
 // 请求成功响应数据的 KEY(服务器写错单词，这里做统一KEY使用)
-static NSString *const KeySuccess = @"IsSucess";
+static NSString *const KeySuccess = @"success";
 // 请求数据成功
 static NSInteger const RequestSuccess = 1;
 // 请求数据失败
@@ -14,15 +14,18 @@ static NSInteger const RequestFail    = 0;
 // 包数据量(默认)
 static NSString *const PacketCount    = @"5000";
 
+// 请求超时
+static NSInteger const RequestTimeOut    = 10;
+
 
 // 公网IP
-static NSString *const rDefaultIP                = @"00.00.00.00";
+static NSString *const rDefaultIP                = @"106.14.63.79";
 // 公网端口
-static NSString *const rDefaultPort              = @"8041";
+static NSString *const rDefaultPort              = @"8098";
 // 前缀
 static NSString *const rPrefix                   = @"http://";
 // 后缀
-static NSString *const rSuffix                   = @"/UTAPPService/JOYOD";
+static NSString *const rSuffix                   = @"";
 
 // 接口文档地址
 // https://www.showdoc.cc/Instranger?page_id=4533897334201300
@@ -242,7 +245,8 @@ static NSString *const rUsersRecommend = @"/users/recommend";
 // - -
 //个人主页
 //1. 查询用户简介接口 GET
-static NSString *const rUsersInfo = @"/users/info/{user_id}";
+//static NSString *const rUsersInfo = @"/users/info/{user_id}";
+static NSString *const rUsersInfo = @"/users/info";
 
 //2. 查询个人资料接口 GET
 static NSString *const rUsersDetail_info = @"/user/detail_info";

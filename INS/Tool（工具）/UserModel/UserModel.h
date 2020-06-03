@@ -11,6 +11,8 @@
 @property (nonatomic, strong) NSNumber *isLogin;//是否已登录  0:未登录  1:登录
 @property (nonatomic, strong) NSString *UserName;//姓名
 
+// 请求用的头
+@property (nonatomic, strong) NSString *jwt;//姓名
 
 
 + (UserModel *)shareUser;

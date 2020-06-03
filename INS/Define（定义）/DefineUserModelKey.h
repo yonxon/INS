@@ -5,5 +5,6 @@
 
 #define kUserName               @"UserName"
 #define kIsLogin                @"IsLogin"
+#define kjwt               @"jwt"
 
 #endif /* DefineUserModelKey_h */

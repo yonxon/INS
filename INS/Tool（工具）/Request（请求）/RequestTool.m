@@ -34,7 +34,7 @@
     failure:(void (^)(NSError *error))failure
 {
     
-   [[RequestTool shareInstance] GETFullString:URLString parameters:parameters hud:YES success:success failure:failure responseObject:nil];
+   [[RequestTool shareInstance] GETWithURLString:URLString parameters:parameters hud:YES success:success failure:failure responseObject:nil];
 }
 
 
@@ -72,8 +72,27 @@
     [[RequestTool shareInstance]Delete:URLString parameters:parameters hud:YES success:success failure:failure];
 }
 
-
-
+/**
+ *  GET方法请求、是否加密
+ *
+ *  @param URLString        请求方法
+ *  @param parameters        请求的参数
+ *  @param hud              是否显示加载提示框
+ *  @param success          请求成功的回调代码块
+ *  @param failure          请求失败
+ *  @param responseObj      响应的结果  id 类型
+ */
+- (void)GETWithURLString:(NSString *)URLString
+           parameters:(id)parameters
+                  hud:(BOOL)hud
+              success:(void (^)(id successData))success
+              failure:(void (^)(NSError *error))failure
+       responseObject:(void (^)(id responseObject))responseObj
+{
+    NSString *fullURL = [self completeURLString:URLString];
+    
+    [self GETFullString:fullURL parameters:parameters hud:hud success:success failure:failure responseObject:responseObj];
+}
 
 
 /**
@@ -93,7 +112,7 @@
               failure:(void (^)(NSError *error))failure
        responseObject:(void (^)(id responseObject))responseObj
 {
-    
+
     NSMutableDictionary *dicRequest = [[NSMutableDictionary alloc] init];
     
     if([parameters isKindOfClass:[NSDictionary class]] ||
@@ -104,6 +123,8 @@
     
     __weak typeof(self) weaksSelf = self;
     if (hud) {
+       
+        [MessageShow ShowLoding];
     }
     
     if(!parameters)
@@ -116,45 +137,39 @@
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];// 请求
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];// 响应
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-    manager.requestSerializer.timeoutInterval = 10.0f;
+    manager.requestSerializer.timeoutInterval = RequestTimeOut;
+    
+    [manager.requestSerializer setValue:USER_INFOR.jwt forHTTPHeaderField:@"Authorization"];
+    
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
      
     NSLog(@"\n\nGET请求地址:%@ \n\nGET请求参数:%@",FullURLString,dicRequest);
     
     [manager GET:FullURLString parameters:dicRequest progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
+
+        if(hud)
+        {
+            [MessageShow DismissHubGif];
+        }
+ 
         if(responseObj)
         {
             responseObj(responseObject);
         }
-        
-        if (success) {
             
-            NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-            
-            
-            // 截掉前后 双引号
-               
-              NSString  * string = [str substringWithRange:NSMakeRange(1, str.length - 2)];
-               
-            // 去掉反斜杠
-          string = [string stringByReplacingOccurrencesOfString:@"\\" withString:@""];
-            // 将上面处理结果JSON字符串转换成 NSDictionary
-            NSDictionary *dic = [self dictionaryWithJsonString:string];
-       
-            success(dic);
-            if (hud) {
-//                [weaksSelf dismissShow];
-            }
+        if(success)
+        {
+            NSDictionary *jsonDict = [weaksSelf resolveResult:responseObject];
+            success(jsonDict);
         }
-        
+
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (failure)
         {
             failure(error);
             
             if (hud) {
-//                [weaksSelf dismissShow] ;
+                [MessageShow DismissHubGif] ;
             }
         }
     }];
@@ -163,7 +178,13 @@
 
 
 
-
+#pragma mark - 字符串拼接 - - - - - - - - - - - - - - - - - -
+/** 拼接URL,IP、端口*/
+- (NSString *)completeURLString:(NSString *)url
+{
+   return [NSString stringWithFormat:@"%@%@:%@%@%@",rPrefix,rDefaultIP,rDefaultPort,rSuffix,url];
+    
+}
 
 
 /**
@@ -181,90 +202,52 @@
          success:(void (^)(id responseObject))success
          failure:(void (^)(NSError *error))failure
 {
-//    if (hud) {
-//        [SVProgressHUD show];
-//    }
-//
-////URLString =  @"http://192.168.80.22:8789/UTAPPService/CLDYG/SaveWorkingExamByPost/646565D8-F260-482E-87FA-7C7CC96C450D&3";
-//
-//    // 如果是扫码答题，URL样式为 http://192.168.80.62:8789/UTAPPService/CLDYG/SaveWorkingExamChuQin/B32AD8B4-3D04-4FA8-AFE6-DDD5E04B64DC&2&1
-//    if ([URLString containsString:rSaveWorkingExamChuQinPost]) {
-//        URLString = [[RequestUtil shareInstance] completeURLString:URLString];
-//    }
-//    // 非扫码答题，仍旧采用之前的方式
-//    else {
-//        URLString = [[RequestUtil shareInstance] completeURLString:headString];
-//    }
-//
-//
-//
-    NSLog(@"请求地址  %@",URLString);
-    NSLog(@"请求参数  %@",parameters);
-    // 请求字符串
-//    NSString *requestString = [RequestParameter POSTRequestData:parameters];
-
-    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer.timeoutInterval = 10.f;
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
-    [manager.requestSerializer setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    __weak typeof(self) weakSelf = self;
     
-    [AFURLPostRequestSerialization exchangeAFRequestSerialization];
+    if (hud) {
+        [MessageShow ShowLoding];
+    }
     
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];// 请求
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];// 响应
-    manager.requestSerializer.timeoutInterval = 10.f;
+   NSString *fullURL = [self completeURLString:URLString];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:fullURL parameters:nil error:nil];
+    request.timeoutInterval= RequestTimeOut;
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-    NSDictionary *parameters11 = @{@"username":@"1",
-                                     @"account":@"1",
-                                     @"password":@"1"
-                                     };
-
+    // 设置body
+    NSData *body = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil];
+    [request setHTTPBody:body];
     
-    [manager  POST:URLString parameters:parameters11 progress:^(NSProgress * _Nonnull uploadProgress) {
+    AFHTTPResponseSerializer *responseSerializer = [AFHTTPResponseSerializer serializer];
+    responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", @"text/json", @"text/javascript",@"text/plain", nil];
+    manager.responseSerializer = responseSerializer;
+    
+    [[manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
 
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
-        
-          NSString *aString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        
-         NSDictionary *dicResponse = [self dictionaryWithJsonString:aString];
-
-       
-        if(!dicResponse)
-        {
-            return ;
-        }
-
-        if(success)
-        {
-            success(dicResponse);
-        }
-
-        if (hud) {
-//            [self dismissShow];
-        }
-
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if (failure)
-        {
-            failure(error);
-
+        if (!error) {
             if (hud) {
-//                [self dismissShow] ;
+                [MessageShow DismissHubGif];
+            }
+            
+            NSDictionary *jsonDict = [weakSelf resolveResult:responseObject];
+            
+            success(jsonDict);
+
+        } else {
+            
+            if (hud) {
+                [MessageShow DismissHubGif];
+            }
+            
+            if(failure)
+            {
+                failure(error);
             }
         }
-    }];
-    
-    
-    
-    
-//    [manager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-//        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        }];
-}
+    }] resume];
 
+}
 
 
 
@@ -291,7 +274,7 @@
 
 
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer.timeoutInterval = 10.f;
+    manager.requestSerializer.timeoutInterval = RequestTimeOut;
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
     [manager.requestSerializer setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     manager.requestSerializer.HTTPMethodsEncodingParametersInURI = [NSSet setWithObjects:@"GET", @"HEAD", nil];
@@ -300,7 +283,7 @@
     
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];// 请求
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];// 响应
-    manager.requestSerializer.timeoutInterval = 10.f;
+    manager.requestSerializer.timeoutInterval = RequestTimeOut;
     
     
     NSDictionary *parameters11 = @{@"username":@"1",
@@ -383,6 +366,18 @@
     return dic;
 }
 
+
+/** 请求结果转换为 NSDictionary*/
+- (NSDictionary *)resolveResult:(id  _Nullable )responseObject
+{
+    NSString *receiveStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+    
+    NSData * datas = [receiveStr dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:datas options:NSJSONReadingMutableLeaves error:nil];
+    
+    return jsonDict;
+}
 
 
 @end

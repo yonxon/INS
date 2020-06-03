@@ -38,6 +38,7 @@
     NSDictionary *userDic = [[NSDictionary alloc] initWithObjectsAndKeys:
                              self.UserName,kUserName,
                              self.isLogin,kIsLogin,
+                             self.jwt,kjwt,
                              nil];
     
     
@@ -52,10 +53,13 @@
 {
     NSString *filePath = [self documentPath:UserModelFileName];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:filePath]) {
+    if ([fileManager fileExistsAtPath:filePath])
+    {
         NSDictionary *userDic = [NSDictionary dictionaryWithContentsOfFile:filePath];
-        self.UserName           = [userDic objectForKey:kUserName];
-        self.isLogin            = [userDic objectForKey:kIsLogin];
+        
+        self.UserName   = [userDic objectForKey:kUserName];
+        self.isLogin    = [userDic objectForKey:kIsLogin];
+        self.jwt    = [userDic objectForKey:kjwt];
     }
     
 }
@@ -89,6 +93,7 @@
 {
     self.isLogin            = @0;
     self.UserName           = @"";
+    self.jwt                = @"";
 }
 
 /** 版本兼容 - 更新文件字段，确保新增的字段可用*/

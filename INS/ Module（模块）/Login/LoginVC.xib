@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginVC">
             <connections>
                 <outlet property="imgWeChat" destination="9fv-17-qP1" id="Zpm-Bi-MAb"/>
+                <outlet property="lblWechat" destination="sSw-Xt-WsW" id="DUX-A6-iy8"/>
+                <outlet property="txtPhone" destination="vUd-Nm-vGa" id="qBS-ig-csC"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -70,7 +72,7 @@
                         <constraint firstAttribute="height" constant="212" id="QN5-M1-JER"/>
                     </constraints>
                 </imageView>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号码" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vUd-Nm-vGa">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="13750033498" placeholder="手机号码" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vUd-Nm-vGa">
                     <rect key="frame" x="20" y="366" width="374" height="54"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="54" id="xrr-CK-oR8"/>
@@ -78,6 +80,9 @@
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="hgu-Cp-b0H"/>
+                    </connections>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="认证服务由中国移动提供" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v74-hf-I1f">
                     <rect key="frame" x="0.0" y="521" width="414" height="48"/>
