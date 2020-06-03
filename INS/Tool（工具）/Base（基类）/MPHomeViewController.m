@@ -106,8 +106,8 @@
     {
         _IconHome = @{
                          CYLTabBarItemTitle : @"",
-                         CYLTabBarItemImage : @"Tab_authorise_normal",
-                         CYLTabBarItemSelectedImage : @"Tab_authorise_normal",
+                         CYLTabBarItemImage : @"Tab_home2",
+                         CYLTabBarItemSelectedImage : @"Tab_home",
                          };
     }
     
@@ -121,8 +121,8 @@
     {
         _IconFind = @{
                                CYLTabBarItemTitle : @"",
-                               CYLTabBarItemImage : @"Tab_authorise_normal",
-                               CYLTabBarItemSelectedImage : @"Tab_authorise_normal",
+                               CYLTabBarItemImage : @"Tab_find2",
+                               CYLTabBarItemSelectedImage : @"Tab_find",
                                };
         
     }
@@ -140,8 +140,8 @@
     {
         _IconAdd = @{
                            CYLTabBarItemTitle : @"",
-                           CYLTabBarItemImage : @"Tab_authorise_normal",
-                           CYLTabBarItemSelectedImage : @"Tab_authorise_normal",
+                           CYLTabBarItemImage : @"Tab_add2",
+                           CYLTabBarItemSelectedImage : @"Tab_add",
                            };
     }
     return _IconAdd;
@@ -156,8 +156,8 @@
     {
         _IconMsg = @{
                            CYLTabBarItemTitle : @"",
-                           CYLTabBarItemImage : @"Tab_authorise_normal",
-                           CYLTabBarItemSelectedImage : @"Tab_authorise_normal",
+                           CYLTabBarItemImage : @"Tab_msg2",
+                           CYLTabBarItemSelectedImage : @"Tab_msg",
                            };
     }
     return _IconMsg;
@@ -171,8 +171,8 @@
     {
         _IconMine = @{
                            CYLTabBarItemTitle : @"",
-                           CYLTabBarItemImage : @"Tab_authorise_normal",
-                           CYLTabBarItemSelectedImage : @"Tab_authorise_normal",
+                           CYLTabBarItemImage : @"Tab_mine2",
+                           CYLTabBarItemSelectedImage : @"Tab_mine",
                            };
     }
     return _IconMine;
