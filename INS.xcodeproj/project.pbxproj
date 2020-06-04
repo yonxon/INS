@@ -61,6 +61,7 @@
 		51DE3087247FA60800660B90 /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DE3071247FA60800660B90 /* MJRefreshComponent.m */; };
 		51DE308B247FA7FE00660B90 /* RequestTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DE308A247FA7FE00660B90 /* RequestTool.m */; };
 		51DE3093247FB55800660B90 /* AFURLPostRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DE3092247FB55800660B90 /* AFURLPostRequestSerialization.m */; };
+		9704EFFB2489512300E0D51E /* Billabong-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9704EFFA2489512300E0D51E /* Billabong-Bold.ttf */; };
 		977E5D83248384F100B85C35 /* YYWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 977E5D73248384F100B85C35 /* YYWeakProxy.m */; };
 		977E5D84248384F100B85C35 /* ProgressShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 977E5D74248384F100B85C35 /* ProgressShow.m */; };
 		977E5D85248384F100B85C35 /* MessageShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 977E5D75248384F100B85C35 /* MessageShow.m */; };
@@ -188,6 +189,7 @@
 		51DE3091247FB55800660B90 /* AFURLPostRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLPostRequestSerialization.h; sourceTree = "<group>"; };
 		51DE3092247FB55800660B90 /* AFURLPostRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLPostRequestSerialization.m; sourceTree = "<group>"; };
 		8DFB7D6A22B8510F980CC871 /* Pods-INS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-INS.release.xcconfig"; path = "Target Support Files/Pods-INS/Pods-INS.release.xcconfig"; sourceTree = "<group>"; };
+		9704EFFA2489512300E0D51E /* Billabong-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Billabong-Bold.ttf"; sourceTree = "<group>"; };
 		977E5D63247FE90000B85C35 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		977E5D65247FEA4B00B85C35 /* DefineInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefineInterface.h; sourceTree = "<group>"; };
 		977E5D71248384F100B85C35 /* INSHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INSHud.h; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 		5176310C24824DD0000B8E00 /* Tool（工具） */ = {
 			isa = PBXGroup;
 			children = (
+				9704EFF92489510C00E0D51E /* Word（字体） */,
 				977E5D8F2483854E00B85C35 /* LPAlertView */,
 				977E5D70248384F100B85C35 /* ProgressHUD */,
 				51763143248260AF000B8E00 /* UserModel */,
@@ -570,6 +573,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9704EFF92489510C00E0D51E /* Word（字体） */ = {
+			isa = PBXGroup;
+			children = (
+				9704EFFA2489512300E0D51E /* Billabong-Bold.ttf */,
+			);
+			path = "Word（字体）";
+			sourceTree = "<group>";
+		};
 		977E5D64247FE9E600B85C35 /* Define（定义） */ = {
 			isa = PBXGroup;
 			children = (
@@ -719,6 +730,7 @@
 				517631582482643A000B8E00 /* MsgVC.xib in Resources */,
 				51DE3037247F4DE400660B90 /* Assets.xcassets in Resources */,
 				5176315D24826444000B8E00 /* MineVC.xib in Resources */,
+				9704EFFB2489512300E0D51E /* Billabong-Bold.ttf in Resources */,
 				977E5D86248384F100B85C35 /* iconError.png in Resources */,
 				5176316724826464000B8E00 /* AddVC.xib in Resources */,
 				51DE3077247FA60800660B90 /* MJRefresh.bundle in Resources */,

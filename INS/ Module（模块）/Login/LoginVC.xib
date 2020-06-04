@@ -13,9 +13,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginVC">
             <connections>
                 <outlet property="imgWeChat" destination="9fv-17-qP1" id="Zpm-Bi-MAb"/>
+                <outlet property="lblLogo" destination="oNg-jc-RRh" id="iMV-NA-xLi"/>
+                <outlet property="lblLogo2" destination="Jhx-7N-9gM" id="LLC-H5-30D"/>
                 <outlet property="lblWechat" destination="sSw-Xt-WsW" id="DUX-A6-iy8"/>
                 <outlet property="txtPhone" destination="vUd-Nm-vGa" id="qBS-ig-csC"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewLogo" destination="M04-wX-HuP" id="YI2-Pi-led"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -24,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bk-2W-Neq">
-                    <rect key="frame" x="20" y="432" width="374" height="60"/>
+                    <rect key="frame" x="20" y="402" width="374" height="60"/>
                     <color key="backgroundColor" red="0.028696278110146523" green="0.67774343490600586" blue="0.94402223825454712" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="tte-nY-Pvr"/>
@@ -51,29 +54,54 @@
                         <action selector="btnHelp:" destination="-1" eventType="touchUpInside" id="rNe-Ah-odo"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DIH-bj-HRn">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DIH-bj-HRn">
                     <rect key="frame" x="0.0" y="44" width="85" height="67"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="85" id="CRe-yg-vDS"/>
                         <constraint firstAttribute="height" constant="67" id="f3W-hW-DBs"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                    <state key="normal" title="X">
+                    <state key="normal" image="Login1">
                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                     </state>
                     <connections>
                         <action selector="btnQuit:" destination="-1" eventType="touchUpInside" id="irj-jf-bpj"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="38k-jY-wrC">
-                    <rect key="frame" x="88" y="119" width="238" height="212"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M04-wX-HuP" userLabel="ViewLogo">
+                    <rect key="frame" x="0.0" y="191" width="414" height="110"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNg-jc-RRh">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="9ia-bE-ZLk"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jhx-7N-9gM">
+                            <rect key="frame" x="0.0" y="70" width="414" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="1w0-NE-asZ"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="238" id="EPW-jf-PP9"/>
-                        <constraint firstAttribute="height" constant="212" id="QN5-M1-JER"/>
+                        <constraint firstAttribute="trailing" secondItem="Jhx-7N-9gM" secondAttribute="trailing" id="9e7-4q-oMl"/>
+                        <constraint firstItem="oNg-jc-RRh" firstAttribute="top" secondItem="M04-wX-HuP" secondAttribute="top" id="GDw-Hl-IV2"/>
+                        <constraint firstItem="Jhx-7N-9gM" firstAttribute="leading" secondItem="M04-wX-HuP" secondAttribute="leading" id="NPz-3g-q3g"/>
+                        <constraint firstAttribute="trailing" secondItem="oNg-jc-RRh" secondAttribute="trailing" id="gOD-YL-p2U"/>
+                        <constraint firstItem="oNg-jc-RRh" firstAttribute="leading" secondItem="M04-wX-HuP" secondAttribute="leading" id="hFB-ix-VGQ"/>
+                        <constraint firstAttribute="height" constant="110" id="nRs-f2-qTS"/>
+                        <constraint firstItem="Jhx-7N-9gM" firstAttribute="top" secondItem="M04-wX-HuP" secondAttribute="top" constant="70" id="nt5-45-l0H"/>
                     </constraints>
-                </imageView>
+                </view>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="13750033498" placeholder="手机号码" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vUd-Nm-vGa">
-                    <rect key="frame" x="20" y="366" width="374" height="54"/>
+                    <rect key="frame" x="20" y="336" width="374" height="54"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="54" id="xrr-CK-oR8"/>
                     </constraints>
@@ -85,7 +113,7 @@
                     </connections>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="认证服务由中国移动提供" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v74-hf-I1f">
-                    <rect key="frame" x="0.0" y="521" width="414" height="48"/>
+                    <rect key="frame" x="0.0" y="491" width="414" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="dMy-Ls-PNk"/>
                     </constraints>
@@ -93,7 +121,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoWechat" translatesAutoresizingMaskIntoConstraints="NO" id="9fv-17-qP1">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Login2" translatesAutoresizingMaskIntoConstraints="NO" id="9fv-17-qP1">
                     <rect key="frame" x="154" y="781" width="106" height="81"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="106" id="0yY-Xe-g1A"/>
@@ -110,7 +138,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J1p-YU-vHh" userLabel="ViewTip">
-                    <rect key="frame" x="0.0" y="589" width="414" height="106"/>
+                    <rect key="frame" x="0.0" y="559" width="414" height="106"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登录即表明同意" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bn7-A0-Kvi">
                             <rect key="frame" x="78" y="8" width="108" height="30"/>
@@ -200,6 +228,8 @@
                 <constraint firstItem="Udi-KI-vBA" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="5Ei-Xb-Hln"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="vUd-Nm-vGa" secondAttribute="trailing" constant="20" id="7aL-hw-WAP"/>
                 <constraint firstItem="9fv-17-qP1" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="7hj-o3-KU5"/>
+                <constraint firstItem="vUd-Nm-vGa" firstAttribute="top" secondItem="M04-wX-HuP" secondAttribute="bottom" constant="35" id="7kK-b8-gw9"/>
+                <constraint firstItem="M04-wX-HuP" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="8nV-vd-RQv"/>
                 <constraint firstItem="Udi-KI-vBA" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="JRW-YX-KVV"/>
                 <constraint firstItem="v74-hf-I1f" firstAttribute="top" secondItem="3bk-2W-Neq" secondAttribute="bottom" constant="29" id="MpS-kO-Fj2"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="3bk-2W-Neq" secondAttribute="trailing" constant="20" id="ODp-kA-ZkM"/>
@@ -208,16 +238,15 @@
                 <constraint firstItem="3bk-2W-Neq" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="YCW-H1-yAX"/>
                 <constraint firstItem="9fv-17-qP1" firstAttribute="top" secondItem="sSw-Xt-WsW" secondAttribute="bottom" constant="8" id="b3C-6e-5pN"/>
                 <constraint firstItem="J1p-YU-vHh" firstAttribute="top" secondItem="v74-hf-I1f" secondAttribute="bottom" constant="20" id="bUm-9m-KwB"/>
+                <constraint firstItem="M04-wX-HuP" firstAttribute="top" secondItem="Udi-KI-vBA" secondAttribute="bottom" constant="80" id="cZa-wt-DmO"/>
                 <constraint firstItem="sSw-Xt-WsW" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="chL-0d-odw"/>
                 <constraint firstItem="DIH-bj-HRn" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="cq8-fe-mtg"/>
                 <constraint firstItem="J1p-YU-vHh" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="h1x-jg-wXu"/>
-                <constraint firstItem="vUd-Nm-vGa" firstAttribute="top" secondItem="38k-jY-wrC" secondAttribute="bottom" constant="35" id="k7p-mZ-Lqt"/>
+                <constraint firstItem="M04-wX-HuP" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="ih8-o3-Y5N"/>
                 <constraint firstItem="sSw-Xt-WsW" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="kRI-PP-CCv"/>
                 <constraint firstItem="v74-hf-I1f" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="lpJ-er-bBN"/>
                 <constraint firstItem="vUd-Nm-vGa" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="20" id="onB-I8-W86"/>
                 <constraint firstItem="9fv-17-qP1" firstAttribute="bottom" secondItem="Q5M-cg-NOt" secondAttribute="bottom" id="v3m-QI-jAV"/>
-                <constraint firstItem="38k-jY-wrC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="wTW-qc-qth"/>
-                <constraint firstItem="38k-jY-wrC" firstAttribute="top" secondItem="Udi-KI-vBA" secondAttribute="bottom" constant="8" id="zAV-LM-3BY"/>
                 <constraint firstItem="DIH-bj-HRn" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="zAu-dT-Yde"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
@@ -225,7 +254,7 @@
         </view>
     </objects>
     <resources>
-        <image name="logo" width="608" height="422"/>
-        <image name="logoWechat" width="221" height="226"/>
+        <image name="Login1" width="10" height="10"/>
+        <image name="Login2" width="48" height="39"/>
     </resources>
 </document>

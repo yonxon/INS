@@ -29,6 +29,10 @@
 @property (nonatomic,weak) IBOutlet UILabel *lblWechat;
 @property (nonatomic,weak) IBOutlet UITextField *txtPhone;
 
+@property (nonatomic,weak) IBOutlet UILabel *lblLogo;
+@property (nonatomic,weak) IBOutlet UILabel *lblLogo2;
+
+@property (nonatomic,weak) IBOutlet UIView *viewLogo;
 
 @end
 
@@ -44,7 +48,14 @@
     
     [self gotoHomeView];
     
-//    [self requestTest];
+
+   NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"ins" attributes:@{NSFontAttributeName: [UIFont fontWithName:@"BillabongW00-Regular" size: 100],NSForegroundColorAttributeName: [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0]}];
+    self.lblLogo.attributedText = string;
+
+    NSMutableAttributedString *string2 = [[NSMutableAttributedString alloc] initWithString:@"instranger" attributes:@{NSFontAttributeName: [UIFont fontWithName:@"BillabongW00-Regular" size: 30],NSForegroundColorAttributeName: [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0]}];
+    self.lblLogo2.attributedText = string2;
+    
+    
 }
 
 
